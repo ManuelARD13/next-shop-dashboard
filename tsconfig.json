@@ -21,6 +21,9 @@
       "@components/*": ["/components/*"],
       "@common/*": ["common/*"],
       "@layout/*": ["layout/*"],
+      "@pages/*": ["pages/*"],
+      "@services/*": ["services/*"],
+      "@hooks/*": ["hooks/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/layout/MainLayout.Jsx"],

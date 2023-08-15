@@ -1,17 +1,21 @@
 import { LockClosedIcon } from '@heroicons/react/24/solid';
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+import { useAuth, AuthContext } from '@hooks/useAuth';
 
 export default function LoginPage() {
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
+  const { auth } = useContext(AuthContext)
 
   const sumbitHandler = (e) => {
     e.preventDefault()
     const email = emailRef.current.value
     const password = passwordRef.current.value
-
-    
+    auth.signIn(email, password)
+      .then(() => {
+        console.log("Login Success!")
+      })  
   }
 
   return (
