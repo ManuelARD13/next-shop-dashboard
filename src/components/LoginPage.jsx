@@ -1,12 +1,14 @@
 import { LockClosedIcon } from '@heroicons/react/24/solid';
 import { useRef } from 'react';
 import { useAuth } from '@hooks/useAuth';
+import { useRouter } from 'next/router';
 
 export default function LoginPage() {
 
   const emailRef = useRef(null)
   const passwordRef = useRef(null)
   const { auth } = useAuth()
+  const router = useRouter()
 
   const sumbitHandler = (e) => {
     e.preventDefault()
@@ -14,7 +16,7 @@ export default function LoginPage() {
     const password = passwordRef.current.value
     auth.signIn(email, password)
       .then(() => {
-        console.log("Login Success!")
+        router.push('/dashboard')
       })  
   }
 

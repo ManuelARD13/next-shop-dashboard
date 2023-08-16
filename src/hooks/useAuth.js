@@ -19,7 +19,7 @@ export const useAuth = () => {
 }
 
 function useProviderAuth () {
-  const [user, setUser] = useState(null);
+  const [ user, setUser ] = useState(null);
 
   const signIn = async (email, password) => {
     
@@ -52,5 +52,5 @@ function useProviderAuth () {
     }
     
   }
-  return { user, signIn }
+  return { user , signIn }
 }
