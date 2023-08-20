@@ -47,5 +47,13 @@ function useProviderAuth() {
       alert('Email and/or password is incorrect');
     }
   };
-  return { user, signIn };
+
+  const logOut = () => {
+    setUser(null);
+    Cookie.remove('token');
+    delete axios.defaults.headers.Authorization;
+    window.location.href = '/login';
+  }
+  
+  return { user, signIn, logOut };
 }

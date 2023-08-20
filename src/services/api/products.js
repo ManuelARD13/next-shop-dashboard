@@ -1,5 +1,6 @@
 import axios from "axios"
 import endPoints from '@services/api';
+import { config } from "process";
 
 
 const addProduct = async (body) => {
@@ -29,4 +30,17 @@ const deleteProduct = async (id) => {
   return response
 }
 
-export { addProduct, deleteProduct }
+const updateProduct = async (id, body) => {
+  const config = {
+    headers: {
+      accept: '*/*',
+      'Content-Type': 'application/json',
+    }
+  }
+  const response = await axios.put(
+    endPoints.products.updateProducts(id), body, config
+  )
+  return response.data
+}
+
+export { addProduct, deleteProduct, updateProduct }
