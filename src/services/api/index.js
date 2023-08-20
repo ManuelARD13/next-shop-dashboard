@@ -1,11 +1,11 @@
-const API = process.env.NEXT_PUBLIC_API_URL
-const VERSION = process.env.NEXT_PUBLIC_API_VERSION
+const API = process.env.NEXT_PUBLIC_API_URL;
+const VERSION = process.env.NEXT_PUBLIC_API_VERSION;
 
 const endPoints = {
   auth: {
     login: `${API}/api/${VERSION}/auth/login`,
     profile: `${API}/api/${VERSION}/auth/profile`,
-    refreshToken: `${API}/api/${VERSION}/auth/refresh-token`, 
+    refreshToken: `${API}/api/${VERSION}/auth/refresh-token`,
   },
   users: {
     getUsers: (limit) => `${API}/api/${VERSION}/users?limit=${limit}`,
@@ -30,15 +30,14 @@ const endPoints = {
     postCategory: (id) => `${API}/api/${VERSION}/categories/${id}`,
     putCategory: (id) => `${API}/api/${VERSION}/categories/${id}`,
     deleteCategory: (id) => `${API}/api/${VERSION}/categories/${id}`,
-    getProductsByCategory: 
-      (id, limit, offset) => 
-        {`${API}/api/${VERSION}/categories/${id}/products?limit=${limit}&offset=${offset}`},
+    getProductsByCategory: (id, limit, offset) => {
+      `${API}/api/${VERSION}/categories/${id}/products?limit=${limit}&offset=${offset}`;
+    },
   },
   files: {
     postFiles: `${API}/api/${VERSION}/files/upload`,
     getFiles: (filename) => `${API}/api/${VERSION}/files/${filename}`,
-  } 
-}
+  },
+};
 
-export default endPoints
-
+export default endPoints;

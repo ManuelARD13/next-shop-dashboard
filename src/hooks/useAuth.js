@@ -53,7 +53,7 @@ function useProviderAuth() {
     Cookie.remove('token');
     delete axios.defaults.headers.Authorization;
     window.location.href = '/login';
-  }
-  
+  };
+
   return { user, signIn, logOut };
 }
