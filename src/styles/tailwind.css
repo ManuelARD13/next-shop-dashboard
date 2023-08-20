@@ -6,3 +6,11 @@
 .bg-op-gray {
   background-color: rgba(78, 75, 75, 0.2);
 }
+
+.alert-success {
+  background-color: rgba(30, 212, 30);
+}
+
+.alert-error {
+  background-color: rgb(187, 27, 27);
+}

@@ -1,15 +1,53 @@
-import { useState } from 'react';
-import { PlusCircleIcon } from '@heroicons/react/20/solid';
+import { useEffect, useState } from 'react';
+import { PlusCircleIcon, XCircleIcon } from '@heroicons/react/20/solid';
 
 import Modal2 from '@common/Modal2';
-import FormProduct from '../../components/FormProduct';
+import FormProduct from '@components/FormProduct';
+import axios from 'axios';
+import endPoints from '@services/api';
+import useAlert from '@hooks/useAlert';
+import Alert from '@common/Alert';
+import { deleteProduct } from '@services/api/products';
 
 export default function Product() {
   const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
+  const { alert, setAlert, toggleAlert } = useAlert();
+
+  useEffect(() => {
+    async function getProducts() {
+      const response = await axios.get(endPoints.products.allProducts);
+      setProducts(response.data);
+    }
+    try {
+      getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [alert]);
+
+  const handleDelete = (id) => {
+    deleteProduct(id)
+      .then(() => {
+        setAlert({
+          active: true,
+          type: 'error',
+          message: 'Product deleted successfully',
+          autoClose: true,
+      })})
+      .catch((error) => {
+        setAlert({
+          active: true,
+          type: 'error',
+          message: error.message,
+          autoClose: true,
+        })
+      })
+  }
 
   return (
     <>
+      <Alert alert={alert} handleClose={toggleAlert} />
       <div className="lg:flex lg:items-center lg:justify-between mb-8">
         <div className="min-w-0 flex-1">
           <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">List of Products</h2>
@@ -77,9 +115,7 @@ export default function Product() {
                         </a>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Delete
-                        </a>
+                        <XCircleIcon className="flex-shirnk-0 h-6 w-6 text-gray-400 cursor-pointer" onClick={() => handleDelete(product.id)} aria-hidden="true" />
                       </td>
                     </tr>
                   ))}
@@ -89,11 +125,8 @@ export default function Product() {
           </div>
         </div>
       </div>
-      {/* <Modal open={open} setOpen={setOpen}>
-        <h1>hola q hace</h1>
-      </Modal> */}
       <Modal2 open={open} setOpen={setOpen}>
-        <FormProduct />
+        <FormProduct setOpen={setOpen} setAlert={setAlert} />
       </Modal2>
     </>
   );
