@@ -1,29 +1,28 @@
-import useFetch from "@hooks/useFetch";
-import endPoints from "@services/api";
-import { Chart } from "@common/Chart";
+import useFetch from '@hooks/useFetch';
+import endPoints from '@services/api';
+import { Chart } from '@common/Chart';
 
 export default function Dashboard() {
+  const PRODUCT_LIMIT = 24;
+  const PRODUCT_OFFSET = 0;
 
-  const PRODUCT_LIMIT = 24
-  const PRODUCT_OFFSET = 0
+  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET));
 
-  const products = useFetch(endPoints.products.getProducts(PRODUCT_LIMIT, PRODUCT_OFFSET))
+  const categoryNames = products.map((product) => product.category);
+  const categoryCounts = categoryNames?.map((category) => category.name);
 
-  const categoryNames = products.map((product) => product.category)
-  const categoryCounts = categoryNames?.map((category) => category.name)
-  
-  const countOcurrences = (arr) => arr.reduce((acc, curr) => (acc[curr] = ++acc[curr] || 1, acc), {})
+  const countOcurrences = (arr) => arr.reduce((acc, curr) => ((acc[curr] = ++acc[curr] || 1), acc), {});
 
   const data = {
     datasets: [
       {
-        label: "Categories",
+        label: 'Categories',
         data: countOcurrences(categoryCounts),
         borderWidth: 2,
-        backgroundColor: ["#ffbb11", "#c0c0c0", "#50AF95", "f3ba2f", "#2a71d0"],
-      }
+        backgroundColor: ['#ffbb11', '#c0c0c0', '#50AF95', 'f3ba2f', '#2a71d0'],
+      },
     ],
-  }
+  };
 
   return (
     <>
@@ -62,12 +61,10 @@ export default function Dashboard() {
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.title}</div>
-                            {/* <div className="text-sm text-gray-500">{product.category.name}</div> */}
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        {/* <div className="text-sm text-gray-900">{product.title}</div> */}
                         <div className="text-sm text-gray-500">{product.category.name}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

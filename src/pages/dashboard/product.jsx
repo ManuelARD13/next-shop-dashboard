@@ -1,11 +1,13 @@
-import { useState } from 'react'
-import { PlusCircleIcon } from '@heroicons/react/20/solid'
+import { useState } from 'react';
+import { PlusCircleIcon } from '@heroicons/react/20/solid';
 
-import Modal from '../../common/Modal'
+import Modal2 from '@common/Modal2';
+import FormProduct from '../../components/FormProduct';
 
 export default function Product() {
-  const [products, setProducts] = useState([])
-  const [open, setOpen] = useState(false)
+  const [products, setProducts] = useState([]);
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <div className="lg:flex lg:items-center lg:justify-between mb-8">
@@ -17,8 +19,9 @@ export default function Product() {
             <button
               type="button"
               className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={() => setOpen(true)}
             >
-              <PlusCircleIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" onClick={() => setOpen(true)} />
+              <PlusCircleIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
               Add Product
             </button>
           </span>
@@ -86,9 +89,12 @@ export default function Product() {
           </div>
         </div>
       </div>
-      <Modal open={open} setOpen={setOpen} />
+      {/* <Modal open={open} setOpen={setOpen}>
         <h1>hola q hace</h1>
-      <Modal />
+      </Modal> */}
+      <Modal2 open={open} setOpen={setOpen}>
+        <FormProduct />
+      </Modal2>
     </>
-  )
+  );
 }

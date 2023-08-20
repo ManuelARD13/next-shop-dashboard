@@ -1,56 +1,51 @@
-import { useState,useContext, createContext} from "react";
-import Cookie from "js-cookie";
-import axios from "axios";
-import endPoints from "@services/api"
+import { useState, useContext, createContext } from 'react';
+import Cookie from 'js-cookie';
+import axios from 'axios';
+import endPoints from '@services/api';
 
 export const AuthContext = createContext();
 
 export const ProviderAuth = ({ children }) => {
   const auth = useProviderAuth();
-  return(
-    <AuthContext.Provider value={{auth}}>
-      {children}
-    </AuthContext.Provider>
-  ) 
-}
+
+  return <AuthContext.Provider value={{ auth }}>{children}</AuthContext.Provider>;
+};
 
 export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
-function useProviderAuth () {
-  const [ user, setUser ] = useState(null);
+function useProviderAuth() {
+  const [user, setUser] = useState(null);
 
   const signIn = async (email, password) => {
-    
     const options = {
       headers: {
-        accept: '*/*', 
+        accept: '*/*',
         'Content-Type': 'application/json',
-      }
-    }
+      },
+    };
 
     try {
-      const { data:access_token } = await axios.post(
-        endPoints.auth.login, 
+      const { data: access_token } = await axios.post(
+        endPoints.auth.login,
         {
           email,
-          password
-        }, 
+          password,
+        },
         options
-      ) 
-      if(access_token){
-        const token = access_token.access_token
+      );
+      if (access_token) {
+        const token = access_token.access_token;
 
-        Cookie.set('token', token, { expires: 5 })
-        axios.defaults.headers.Authorization = `Bearer ${token}`
-        const { data: user } = await axios.get(endPoints.auth.profile)
-        setUser(user)
+        Cookie.set('token', token, { expires: 5 });
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        const { data: user } = await axios.get(endPoints.auth.profile);
+        setUser(user);
       }
     } catch (error) {
-      alert("Email and/or password is incorrect")
+      alert('Email and/or password is incorrect');
     }
-    
-  }
-  return { user , signIn }
+  };
+  return { user, signIn };
 }

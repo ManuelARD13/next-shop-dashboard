@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*Move to the Modal2 directory*/
+.bg-op-gray {
+  background-color: rgba(78, 75, 75, 0.2);
+}
